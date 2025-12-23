@@ -129,7 +129,7 @@ export default function Listing({ onAdClick }) {
     <div className="page-wrapper">
       <div className="container">
         <div className="search-section">
-          <h1>Browse Ads</h1>
+          <h3>Browse Ads</h3>
           <div className="search-card">
             <div className="search-input-wrapper">
               <input
