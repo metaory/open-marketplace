@@ -82,7 +82,7 @@ export default function App() {
       }}>
         <div className="container" style={{ display: 'flex', gap: '1rem', justifyContent: 'space-between', alignItems: 'center', padding: '1rem' }}>
           <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', cursor: 'pointer' }} onClick={() => setView(VIEWS.LISTING)}>
-            <img src="/logo.svg" alt="Marketplace" style={{ height: '32px', width: 'auto' }} />
+            <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="Marketplace" style={{ height: '32px', width: 'auto' }} />
           </div>
           <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
             <button 
