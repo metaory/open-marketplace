@@ -26,53 +26,24 @@ export default function ImageUpload({ images = [], onChange }) {
 
   return (
     <div>
-      <label style={{ 
-        display: 'inline-block', 
-        padding: '0.625rem 1.25rem', 
-        background: 'var(--bg)', 
-        border: '1px solid var(--border)', 
-        borderRadius: 'var(--radius-sm)', 
-        cursor: 'pointer',
-        fontSize: '0.875rem',
-        fontWeight: 500,
-        transition: 'all 0.2s'
-      }}>
+      <label className="image-upload-label">
         Choose Images
         <input 
           type="file" 
           accept="image/*" 
           multiple 
           onChange={handleInput} 
-          style={{ display: 'none' }}
+          className="image-upload-input"
         />
       </label>
       {previews.length > 0 && (
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fill, minmax(120px, 1fr))', 
-          gap: '1rem', 
-          marginTop: '1rem' 
-        }}>
+        <div className="image-previews">
           {previews.map((src, i) => (
-            <div key={i} style={{ position: 'relative', borderRadius: 'var(--radius-sm)', overflow: 'hidden' }}>
-              <img src={src} alt={`Preview ${i + 1}`} style={{ width: '100%', height: '120px', objectFit: 'cover', display: 'block' }} />
+            <div key={i} className="image-preview-wrapper">
+              <img src={src} alt={`Preview ${i + 1}`} className="image-preview" />
               <button 
                 onClick={() => removeImage(i)} 
-                className="danger"
-                style={{ 
-                  position: 'absolute', 
-                  top: '0.25rem', 
-                  right: '0.25rem',
-                  padding: '0.25rem 0.5rem',
-                  fontSize: '0.75rem',
-                  minWidth: 'auto',
-                  borderRadius: '50%',
-                  width: '24px',
-                  height: '24px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}
+                className="danger image-remove-btn"
               >
                 ×
               </button>

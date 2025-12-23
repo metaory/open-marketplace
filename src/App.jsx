@@ -71,45 +71,36 @@ export default function App() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <nav style={{ 
-        background: 'var(--bg-card)', 
-        borderBottom: '1px solid var(--border)', 
-        boxShadow: '0 1px 3px var(--shadow)',
-        position: 'sticky',
-        top: 0,
-        zIndex: 100
-      }}>
-        <div className="container" style={{ display: 'flex', gap: '1rem', justifyContent: 'space-between', alignItems: 'center', padding: '1rem' }}>
-          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', cursor: 'pointer' }} onClick={() => setView(VIEWS.LISTING)}>
-            <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="Marketplace" style={{ height: '32px', width: 'auto' }} />
+    <div className="app-root">
+      <nav>
+        <div className="container">
+          <div className="logo-container" onClick={() => setView(VIEWS.LISTING)}>
+            <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="" />
+            <span className="logo-text">Open Marketplace</span>
           </div>
-          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+          <div className="nav-actions">
             <button 
               onClick={() => setView(VIEWS.LISTING)} 
-              className={view === VIEWS.LISTING ? 'primary' : 'secondary'}
-              style={{ fontSize: '0.875rem' }}
+              className={`nav-button ${view === VIEWS.LISTING ? 'primary' : 'secondary'}`}
             >
               Browse
             </button>
             <button 
               onClick={() => setView(VIEWS.DASHBOARD)} 
-              className={view === VIEWS.DASHBOARD ? 'primary' : 'secondary'}
-              style={{ fontSize: '0.875rem' }}
+              className={`nav-button ${view === VIEWS.DASHBOARD ? 'primary' : 'secondary'}`}
             >
               My Ads
             </button>
             <button 
               onClick={handleToggleTheme}
-              className="secondary"
-              style={{ fontSize: '1.25rem', padding: '0.5rem 0.75rem', minWidth: 'auto' }}
+              className="secondary theme-button"
             >
               {theme === 'light' ? '🌙' : '☀️'}
             </button>
           </div>
         </div>
       </nav>
-      <main style={{ flex: 1 }}>
+      <main>
         {view === VIEWS.LISTING && <Listing onAdClick={(id) => { setCurrentAdId(id); setView(VIEWS.DETAIL) }} />}
         {view === VIEWS.DASHBOARD && (
           <Dashboard

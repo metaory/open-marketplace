@@ -17,59 +17,34 @@ export default function Dashboard({ onCreateAd, onEditAd, onViewAd }) {
   }
 
   return (
-    <div style={{ flex: 1, padding: '2rem 0' }}>
+    <div className="page-wrapper">
       <div className="container">
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          alignItems: 'center', 
-          marginBottom: '2rem',
-          flexWrap: 'wrap',
-          gap: '1rem'
-        }}>
+        <div className="dashboard-header">
           <h1>My Ads</h1>
-          <button onClick={onCreateAd} className="primary" style={{ fontSize: '0.875rem' }}>
+          <button onClick={onCreateAd} className="primary dashboard-create-btn">
             + Create New Ad
           </button>
         </div>
         {ads.length === 0 ? (
-          <div style={{ 
-            textAlign: 'center', 
-            padding: '3rem', 
-            color: 'var(--text-secondary)',
-            background: 'var(--bg-card)',
-            borderRadius: 'var(--radius)',
-            border: '1px solid var(--border)'
-          }}>
-            <p style={{ fontSize: '1rem', marginBottom: '1rem' }}>You haven't created any ads yet.</p>
+          <div className="dashboard-empty-state">
+            <p>You haven't created any ads yet.</p>
             <button onClick={onCreateAd} className="primary">Create Your First Ad</button>
           </div>
         ) : (
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', 
-            gap: '1.5rem'
-          }}>
+          <div className="ads-grid">
             {ads.map(ad => (
-              <div key={ad.id} style={{ display: 'flex', flexDirection: 'column' }}>
+              <div key={ad.id} className="ad-card-wrapper">
                 <AdCard ad={ad} onClick={() => onViewAd(ad.id)} />
-                <div style={{ 
-                  marginTop: '0.75rem', 
-                  display: 'flex', 
-                  gap: '0.5rem',
-                  padding: '0 0.25rem'
-                }}>
+                <div className="ad-card-actions">
                   <button 
                     onClick={() => onEditAd(ad.id)} 
-                    className="secondary"
-                    style={{ flex: 1, fontSize: '0.875rem' }}
+                    className="secondary ad-card-action-btn"
                   >
                     Edit
                   </button>
                   <button 
                     onClick={() => handleDelete(ad.id)} 
-                    className="danger"
-                    style={{ flex: 1, fontSize: '0.875rem' }}
+                    className="danger ad-card-action-btn"
                   >
                     Delete
                   </button>

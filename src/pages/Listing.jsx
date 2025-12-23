@@ -126,35 +126,24 @@ export default function Listing({ onAdClick }) {
   }, [allAds, searchQuery, locationSearch, sortOrder])
 
   return (
-    <div style={{ flex: 1, padding: '2rem 0' }}>
+    <div className="page-wrapper">
       <div className="container">
-        <div style={{ marginBottom: '2rem' }}>
-          <h1 style={{ marginBottom: '1.5rem' }}>Browse Ads</h1>
-          <div style={{ 
-            background: 'var(--bg-card)', 
-            padding: '1.5rem', 
-            borderRadius: 'var(--radius)', 
-            border: '1px solid var(--border)',
-            marginBottom: '2rem'
-          }}>
-            <div style={{ marginBottom: '1rem' }}>
+        <div className="search-section">
+          <h1>Browse Ads</h1>
+          <div className="search-card">
+            <div className="search-input-wrapper">
               <input
                 type="text"
                 placeholder="Search by title, description, location, or seller info..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                style={{ 
-                  width: '100%', 
-                  padding: '0.875rem 1rem',
-                  fontSize: '0.875rem',
-                  borderRadius: 'var(--radius)'
-                }}
+                className="search-input"
               />
             </div>
-            <div style={{ marginBottom: '1rem', padding: '1rem', background: 'var(--bg)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: 500 }}>Location Search</label>
-              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'flex-start' }}>
-                <div style={{ flex: '1', minWidth: '200px', position: 'relative' }}>
+            <div className="location-search-card">
+              <label className="location-search-label">Location Search</label>
+              <div className="location-search-fields">
+                <div className="location-search-city">
                   <input
                     type="text"
                     placeholder="City or region"
@@ -169,32 +158,14 @@ export default function Listing({ onAdClick }) {
                         setShowCitySuggestions(true)
                       }
                     }}
-                    style={{ width: '100%' }}
                   />
                   {showCitySuggestions && citySuggestions.length > 0 && (
-                    <div style={{
-                      position: 'absolute',
-                      top: '100%',
-                      left: 0,
-                      right: 0,
-                      background: 'var(--bg-card)',
-                      border: '1px solid var(--border)',
-                      borderRadius: 'var(--radius-sm)',
-                      marginTop: '0.25rem',
-                      zIndex: 10,
-                      boxShadow: '0 2px 8px var(--shadow)'
-                    }}>
+                    <div className="city-suggestions">
                       {citySuggestions.map((city, i) => (
                         <div
                           key={i}
                           onClick={() => selectCity(city)}
-                          style={{
-                            padding: '0.5rem 0.75rem',
-                            cursor: 'pointer',
-                            borderBottom: i < citySuggestions.length - 1 ? '1px solid var(--border)' : 'none'
-                          }}
-                          onMouseEnter={(e) => e.target.style.background = 'var(--bg)'}
-                          onMouseLeave={(e) => e.target.style.background = 'transparent'}
+                          className="city-suggestion-item"
                         >
                           {city}
                         </div>
@@ -202,11 +173,10 @@ export default function Listing({ onAdClick }) {
                     </div>
                   )}
                 </div>
-                <div style={{ flex: '0 0 auto', minWidth: '120px' }}>
+                <div className="location-search-radius">
                   <select
                     value={locationSearch.radius}
                     onChange={(e) => setLocationSearch({ ...locationSearch, radius: e.target.value })}
-                    style={{ width: '100%' }}
                   >
                     <option value="">All distances</option>
                     <option value="5">Within 5 km</option>
@@ -219,8 +189,7 @@ export default function Listing({ onAdClick }) {
                 <button
                   type="button"
                   onClick={handleUseMyLocation}
-                  className="secondary"
-                  style={{ fontSize: '0.875rem', whiteSpace: 'nowrap' }}
+                  className="secondary location-search-btn"
                 >
                   📍 Use My Location
                 </button>
@@ -228,25 +197,23 @@ export default function Listing({ onAdClick }) {
                   <button
                     type="button"
                     onClick={() => setLocationSearch({ city: '', radius: '', coordinates: null })}
-                    className="secondary"
-                    style={{ fontSize: '0.875rem', whiteSpace: 'nowrap' }}
+                    className="secondary location-search-btn"
                   >
                     Clear
                   </button>
                 )}
               </div>
               {locationSearch.coordinates && (
-                <div style={{ marginTop: '0.5rem', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
+                <div className="location-coords-info">
                   📍 Using location: {locationSearch.coordinates.lat.toFixed(4)}, {locationSearch.coordinates.lng.toFixed(4)}
                 </div>
               )}
             </div>
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-              <div style={{ flex: '1', minWidth: '200px' }}>
+            <div className="sort-section">
+              <div className="sort-select">
                 <select
                   value={sortOrder}
                   onChange={(e) => setSortOrder(e.target.value)}
-                  style={{ width: '100%' }}
                 >
                   <option value="newest">Newest first</option>
                   <option value="oldest">Oldest first</option>
@@ -258,29 +225,17 @@ export default function Listing({ onAdClick }) {
             </div>
           </div>
         </div>
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', 
-          gap: '1.5rem',
-          marginBottom: '2rem'
-        }}>
+        <div className="ads-grid">
           {filteredAds.map(ad => (
             <AdCard key={ad.id} ad={ad} distance={ad._distance} onClick={() => onAdClick(ad.id)} />
           ))}
         </div>
         {filteredAds.length === 0 && (
-          <div style={{ 
-            textAlign: 'center', 
-            padding: '3rem', 
-            color: 'var(--text-secondary)',
-            background: 'var(--bg-card)',
-            borderRadius: 'var(--radius)',
-            border: '1px solid var(--border)'
-          }}>
-            <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+          <div className="empty-state">
+            <p>
               {allAds.length === 0 ? 'No ads yet. Create one in the dashboard!' : 'No ads found matching your search.'}
             </p>
-            {allAds.length > 0 && <p style={{ fontSize: '0.875rem' }}>Try adjusting your search or filters.</p>}
+            {allAds.length > 0 && <p>Try adjusting your search or filters.</p>}
           </div>
         )}
       </div>

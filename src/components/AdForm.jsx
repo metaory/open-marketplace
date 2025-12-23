@@ -101,29 +101,29 @@ export default function AdForm({ ad = null, onSubmit, onCancel }) {
   }
 
   return (
-    <div style={{ flex: 1, padding: '2rem 0' }}>
-      <div className="container" style={{ maxWidth: '700px' }}>
-        <h1 style={{ marginBottom: '2rem' }}>{ad ? 'Edit Ad' : 'Create New Ad'}</h1>
+    <div className="page-wrapper">
+      <div className="container form-container">
+        <h1 className="form-title">{ad ? 'Edit Ad' : 'Create New Ad'}</h1>
         <form onSubmit={handleSubmit} className="card">
-          <div style={{ marginBottom: '1.5rem' }}>
+          <div className="form-section">
             <label>Title</label>
             <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Enter ad title" />
           </div>
-          <div style={{ marginBottom: '1.5rem' }}>
+          <div className="form-section">
             <label>Description</label>
-            <textarea value={description} onChange={(e) => setDescription(e.target.value)} style={{ minHeight: '120px' }} placeholder="Describe your item..." />
+            <textarea value={description} onChange={(e) => setDescription(e.target.value)} className="textarea-large" placeholder="Describe your item..." />
           </div>
-          <div style={{ marginBottom: '1.5rem' }}>
+          <div className="form-section">
             <label>Images</label>
             <ImageUpload images={images} onChange={setImages} />
           </div>
-          <div style={{ marginBottom: '1.5rem' }}>
+          <div className="form-section">
             <label>Video URL</label>
             <input type="url" value={video} onChange={(e) => setVideo(e.target.value)} placeholder="https://..." />
           </div>
-          <div style={{ marginBottom: '1.5rem', padding: '1.5rem', background: 'var(--bg)', borderRadius: 'var(--radius)', border: '1px solid var(--border)' }}>
-            <h3 style={{ marginBottom: '1rem', fontSize: '1rem' }}>Seller Information</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <div className="seller-section">
+            <h3>Seller Information</h3>
+            <div className="seller-fields">
               <div>
                 <label>Phone</label>
                 <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Phone number" />
@@ -138,42 +138,27 @@ export default function AdForm({ ad = null, onSubmit, onCancel }) {
               </div>
             </div>
           </div>
-          <div style={{ marginBottom: '1.5rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-              <label style={{ margin: 0 }}>Locations</label>
-              <button type="button" onClick={addLocation} className="secondary" style={{ fontSize: '0.75rem', padding: '0.375rem 0.75rem' }}>
+          <div className="form-section">
+            <div className="location-header">
+              <label>Locations</label>
+              <button type="button" onClick={addLocation} className="secondary add-location-btn">
                 + Add Location
               </button>
             </div>
             {locations.map((loc, index) => (
-              <div key={index} style={{ 
-                marginBottom: '1rem', 
-                padding: '1rem', 
-                background: 'var(--bg)', 
-                borderRadius: 'var(--radius)', 
-                border: '1px solid var(--border)',
-                position: 'relative'
-              }}>
+              <div key={index} className="location-item">
                 {locations.length > 1 && (
                   <button 
                     type="button" 
                     onClick={() => removeLocation(index)}
-                    className="danger"
-                    style={{ 
-                      position: 'absolute', 
-                      top: '0.5rem', 
-                      right: '0.5rem',
-                      fontSize: '0.75rem',
-                      padding: '0.25rem 0.5rem',
-                      minWidth: 'auto'
-                    }}
+                    className="danger remove-location-btn"
                   >
                     ×
                   </button>
                 )}
-                <div style={{ marginBottom: '0.75rem' }}>
+                <div className="location-field">
                   <label>City/Region</label>
-                  <div style={{ position: 'relative' }}>
+                  <div className="location-input-wrapper">
                     <input 
                       type="text" 
                       value={loc.city || ''} 
@@ -189,29 +174,12 @@ export default function AdForm({ ad = null, onSubmit, onCancel }) {
                       placeholder="Enter city or region" 
                     />
                     {showSuggestions[index]?.length > 0 && (
-                      <div style={{
-                        position: 'absolute',
-                        top: '100%',
-                        left: 0,
-                        right: 0,
-                        background: 'var(--bg-card)',
-                        border: '1px solid var(--border)',
-                        borderRadius: 'var(--radius-sm)',
-                        marginTop: '0.25rem',
-                        zIndex: 10,
-                        boxShadow: '0 2px 8px var(--shadow)'
-                      }}>
+                      <div className="city-suggestions">
                         {showSuggestions[index].map((city, i) => (
                           <div
                             key={i}
                             onClick={() => selectCity(index, city)}
-                            style={{
-                              padding: '0.5rem 0.75rem',
-                              cursor: 'pointer',
-                              borderBottom: i < showSuggestions[index].length - 1 ? '1px solid var(--border)' : 'none'
-                            }}
-                            onMouseEnter={(e) => e.target.style.background = 'var(--bg)'}
-                            onMouseLeave={(e) => e.target.style.background = 'transparent'}
+                            className="city-suggestion-item"
                           >
                             {city}
                           </div>
@@ -220,7 +188,7 @@ export default function AdForm({ ad = null, onSubmit, onCancel }) {
                     )}
                   </div>
                 </div>
-                <div style={{ marginBottom: '0.75rem' }}>
+                <div className="location-field">
                   <label>Service Radius (km, optional)</label>
                   <input 
                     type="number" 
@@ -232,7 +200,7 @@ export default function AdForm({ ad = null, onSubmit, onCancel }) {
                 </div>
                 <div>
                   <label>Coordinates (optional)</label>
-                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <div className="coords-inputs">
                     <input 
                       type="number" 
                       step="any"
@@ -242,7 +210,7 @@ export default function AdForm({ ad = null, onSubmit, onCancel }) {
                         lat: e.target.value ? Number(e.target.value) : null 
                       })}
                       placeholder="Latitude" 
-                      style={{ flex: 1 }}
+                      className="coords-input"
                     />
                     <input 
                       type="number" 
@@ -253,13 +221,12 @@ export default function AdForm({ ad = null, onSubmit, onCancel }) {
                         lng: e.target.value ? Number(e.target.value) : null 
                       })}
                       placeholder="Longitude" 
-                      style={{ flex: 1 }}
+                      className="coords-input"
                     />
                     <button 
                       type="button" 
                       onClick={() => handleGetLocation(index)}
-                      className="secondary"
-                      style={{ fontSize: '0.75rem', padding: '0.5rem 0.75rem', whiteSpace: 'nowrap' }}
+                      className="secondary get-location-btn"
                     >
                       📍 Get Location
                     </button>
@@ -268,24 +235,23 @@ export default function AdForm({ ad = null, onSubmit, onCancel }) {
               </div>
             ))}
           </div>
-          <div style={{ marginBottom: '2rem' }}>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+          <div className="form-section form-section-large">
+            <label className="checkbox-label">
               <input 
                 type="checkbox" 
                 checked={chatEnabled} 
                 onChange={(e) => setChatEnabled(e.target.checked)}
-                style={{ width: 'auto', cursor: 'pointer' }}
               />
               <span>Enable private chat</span>
             </label>
           </div>
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end' }}>
+          <div className="form-actions">
             {onCancel && (
-              <button type="button" onClick={onCancel} className="secondary" style={{ fontSize: '0.875rem' }}>
+              <button type="button" onClick={onCancel} className="secondary form-button">
                 Cancel
               </button>
             )}
-            <button type="submit" className="primary" style={{ fontSize: '0.875rem' }}>
+            <button type="submit" className="primary form-button">
               {ad ? 'Update Ad' : 'Create Ad'}
             </button>
           </div>
